@@ -12,7 +12,7 @@ export default function Tienda({ guitarras }) {
         <h1 className="heading">Nuestra Colección</h1>
 
         <div className={styles.grid}>
-          {guitarras.map((guitarra) => (
+          {guitarras?.map((guitarra) => (
             <Guitarra key={guitarra.id} guitarra={guitarra.attributes} />
           ))}
         </div>

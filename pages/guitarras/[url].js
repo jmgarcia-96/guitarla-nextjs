@@ -1,11 +1,31 @@
 import Image from "next/image";
 import styles from "../../styles/guitarras.module.css";
 import Layout from "../../components/layout";
+import { useContext, useState } from "react";
 
-export default function Producto({ guitarra }) {
+export default function Producto({ guitarra, agregarCarrito }) {
+  const [cantidad, setCantidad] = useState(0);
+
   const { nombre, descripcion, imagen, precio } = guitarra[0].attributes;
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (cantidad < 1) {
+      alert("Debes seleccionar una cantidad");
+      return;
+    }
+
+    const guitarraSeleccionada = {
+      id: guitarra[0].id,
+      imagen: imagen.data.attributes.url,
+      nombre,
+      precio,
+      cantidad,
+    };
+
+    //AGREGAR AL CARRITO
+    agregarCarrito(guitarraSeleccionada);
+  };
   return (
     <Layout title={`Guitarra ${nombre}`}>
       <div className={styles.guitarra}>
@@ -25,7 +45,7 @@ export default function Producto({ guitarra }) {
             <label htmlFor="cantidad">Cantidad</label>
             <select
               id="cantidad"
-              // onChange={(e) => setCantidad(parseInt(e.target.value))}
+              onChange={(e) => setCantidad(parseInt(e.target.value))}
             >
               <option value="">-- Seleccione --</option>
               <option value="1">1</option>
